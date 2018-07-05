@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<div class="calendar">
+		<header class="calendar-header">
+			<div class="container">
+				<div class="row">
+					<div class="calendar-header__btns">
+						<button class="calendar-header__btn btn">Добавить</button>
+						<button class="calendar-header__btn btn">Обновить</button>
+					</div>
+					<!-- /.calendar-header_btns -->
+					<input type="text" class="calendar-header__input">
+				</div>
+			</div>
+		</header>
+		<!-- /.calendar-header -->
+		<div class="calendar-body">
+			<div class="container">
+				<div class="row">
+					<div class="calendar-body__slider">	
+						<button class="calendar-body__slider__btn calendar-body__slider__btn_left btn-o">
+							<img src="img/play-button.svg" alt="">
+						</button>
+						<div id="currentDate" class="calendar-body__slider-currentDate">	
+								Март
+						</div>
+						<!-- /.calendar-body__slider-currentMonth -->
+						<button class="calendar-body__slider__btn calendar-body__slider__btn_right btn-o">
+							<img src="img/play-button.svg" alt="">
+						</button>
+						<button class="btn-o calendar-body__slider__btn calendar-body__slider__btn_today">Сегодня</button>
+					</div>
+					<!-- /.calendar-body__slider -->
+				</div>
+				<div class="row">
+					<table id="calendar2">
+					    <tr><td><td colspan="5"><td>
+					  <tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- /.calendar-body -->
+	</div>
+	<!-- /.calendar -->
+	<div class="over">	</div>
+	<script>
+	var tds;
+	function Calendar2(id, year, month) {
+		var numDayOfWeek = 0,
+				Dlast = new Date(year,month+1,0).getDate(),
+				PrevDlast = new Date(year,month,0).getDate(),
+		    D = new Date(year,month,Dlast),
+		    DNlast = new Date(D.getFullYear(),D.getMonth(),Dlast).getDay(),
+		    DNfirst = new Date(D.getFullYear(),D.getMonth(),1).getDay(),
+		    calendar = '<tr class="top_line">',
+		    month=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+		    dayOfWeek=["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
+		//	alert('Dlast = '+ Dlast+' PrevDlast = '+PrevDlast+' D = '+D+' DNlast = '+DNlast+' DNfirst = '+DNfirst);
+		if (DNfirst != 0) {
+		  for(var  i = 1; i < DNfirst; i++) 
+		  	{
+		  		calendar += '<td>'+dayOfWeek[numDayOfWeek]+', '+ (PrevDlast-DNfirst+i+1);
+					numDayOfWeek++;
+				}
+		}else{
+		  for(var  i = 0; i < 6; i++)
+		  	{ 
+		  		calendar += '<td>'+dayOfWeek[numDayOfWeek]+', '+  (PrevDlast-6+i+1);
+					numDayOfWeek++;
+		  	}
+		}
+		for(var  i = 1; i <= Dlast; i++) {
+		  if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
+		    if (numDayOfWeek < 7){
+					calendar += '<td class="today">' + dayOfWeek[numDayOfWeek] + ', ' + i;
+					numDayOfWeek++;
+		    }
+		    else 
+				{
+					calendar += '<td class="today">' + i;
+		  	}
+		  }else{
+		    if (numDayOfWeek < 7){
+					calendar += '<td>' + dayOfWeek[numDayOfWeek] + ', ' + i;
+					numDayOfWeek++;
+		    }
+		    else 
+				{
+					calendar += '<td>' + i;
+		  	}
+		  }
+		  if (new Date(D.getFullYear(),D.getMonth(),i).getDay() == 0) {
+		    calendar += '<tr>';
+		  }
+		}
+		for(var  i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
+		document.querySelector('#'+id+' tbody').innerHTML = calendar;
+		document.querySelector('#currentDate').innerHTML = month[D.getMonth()] +' '+ D.getFullYear();
+		document.querySelector('#currentDate').dataset.month = D.getMonth();
+		document.querySelector('#currentDate').dataset.year = D.getFullYear();
+		if (document.querySelectorAll('#'+id+' tbody tr').length < 6) {  // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
+		    document.querySelector('#'+id+' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
+		}
+		tds = document.getElementsByTagName('td');
+		for (i=0; i<tds.length; i++) {
+			tds[i].onclick = tdClick;
+		}
+	}
+	Calendar2("calendar2", new Date().getFullYear(), new Date().getMonth());
+	// переключатель минус месяц
+	document.querySelector('.calendar-body__slider__btn_left').onclick = function() {
+	  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month)-1);
+	}
+	// переключатель плюс месяц
+	document.querySelector('.calendar-body__slider__btn_right').onclick = function() {
+	  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month)+1);
+	}
+	document.querySelector('.calendar-body__slider__btn_today').onclick = function() {
+	  Calendar2("calendar2", new Date().getFullYear(), new Date().getMonth());
+	}
+	
+//	 document.querySelector('.over').innerHTML = '<div class="overlay-popup"> <input type="text"> <input type="text"><input type="text"><input type="text"> <button>Готово</button><button>Удалить</button> </div>';
+		 
+	
+	function tdClick() {
+		for (i=0; i<tds.length; i++) {
+			if (!tds[i].classList.contains('today'))
+				tds[i].style.background = "#fff";		
+		}
+		if (!this.classList.contains('today'))
+			this.style.background = "#c1e4ff";
+
+	}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+#calendar2 thead tr:nth-child(1) td:nth-child(1):hover, #calendar2 thead tr:nth-child(1) td:nth-child(3):hover
+	cursor: pointer
+
+#calendar2 tbody td:nth-child(n+6), #calendar2 .holiday
+
+#calendar2
+	width: 100%
+	font: monospace
+	line-height: 1.2em
+	font-size: 15px
+	text-align: center
+	tbody
+		td
+			position: relative
+			opacity: 0.9
+			text-align: left
+			padding: 10px
+			vertical-align: top
+			height: 150px
+			width: 140px
+			border: 1px solid #ccc
+			color: rgb(44, 86, 122)
+			&:focus
+				background: #FA6
+			&.today
+				background-color: #3880e2
+				color: #fff
+	thead
+		tr
+			&:last-child
+				font-size: small
+				color: rgb(85, 85, 85)
+			&:nth-child(1)
+				td
+					&:nth-child(2)
+						color: rgb(50, 50, 50)
+
+*
+	font-family: sans-serif
+	outline: none
+.btn
+	background-color: #3880e2
+	color: #fff
+	&-o
+		
+.overlay
+	position: fixed
+	height: 100%
+	width: 100%	
+	top: 0
+	&-c
+		height: 100%
+		width: 100%	
+	&-popup
+		top: 0
+		position: absolute
+		background-color: #fff
+		box-shadow: 0 0 11px black
+		width: 320px
+		padding: 20px	
+		input
+			display: block
+			margin-left: auto	
+			margin-right: auto	
+			margin-bottom: 10px		
+
+.calendar
+	&-header
+		background-color: #f1f1f1
+		padding-bottom: 20px
+		padding-top: 30px
+		&__btns
+			margin-left: 0
+			margin-right: auto
+		&__input
+			margin-left: auto
+			margin-right: 0
+	&-body
+		padding-top: 20px
+		&__slider
+			margin-bottom: 20px
+			&-currentDate
+				min-width: 130px
+				text-align: center
+				display: inline-block
+				margin-left: 10px
+				margin-right: 10px
+				vertical-align: middle
+			&__btn
+				vertical-align: middle
+				height: 35px
+				font-size: 13px
+				line-height: 100%
+				background-color: transparent
+				border: 1px solid #ccc
+				border-radius: 5px
+				&_left
+					width: 35px
+					padding: 10px
+					padding-top: 0
+					padding-bottom: 0
+					line-height: 8px
+					img
+						transform: rotate(180deg)
+				&_right
+					width: 35px
+					padding: 10px
+					padding-top: 0
+					padding-bottom: 0
+					line-height: 8px

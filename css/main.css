@@ -1,0 +1,145 @@
+#calendar2 thead tr:nth-child(1) td:nth-child(1):hover,
+#calendar2 thead tr:nth-child(1) td:nth-child(3):hover {
+  cursor: pointer;
+}
+
+#calendar2 {
+  width: 100%;
+  font: monospace;
+  line-height: 1.2em;
+  font-size: 15px;
+  text-align: center;
+}
+
+#calendar2 tbody td {
+  position: relative;
+  opacity: 0.9;
+  text-align: left;
+  padding: 10px;
+  vertical-align: top;
+  height: 150px;
+  width: 140px;
+  border: 1px solid #ccc;
+  color: #2c567a;
+}
+
+#calendar2 tbody td:focus {
+  background: #FA6;
+}
+
+#calendar2 tbody td.today {
+  background-color: #3880e2;
+  color: #fff;
+}
+
+#calendar2 thead tr:last-child {
+  font-size: small;
+  color: #555555;
+}
+
+#calendar2 thead tr:nth-child(1) td:nth-child(2) {
+  color: #323232;
+}
+
+* {
+  font-family: sans-serif;
+  outline: none;
+}
+
+.btn {
+  background-color: #3880e2;
+  color: #fff;
+}
+
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+.overlay-c {
+  height: 100%;
+  width: 100%;
+}
+
+.overlay-popup {
+  top: 0;
+  position: absolute;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 11px black;
+  box-shadow: 0 0 11px black;
+  width: 320px;
+  padding: 20px;
+}
+
+.overlay-popup input {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.calendar-header {
+  background-color: #f1f1f1;
+  padding-bottom: 20px;
+  padding-top: 30px;
+}
+
+.calendar-header__btns {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.calendar-header__input {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.calendar-body {
+  padding-top: 20px;
+}
+
+.calendar-body__slider {
+  margin-bottom: 20px;
+}
+
+.calendar-body__slider-currentDate {
+  min-width: 130px;
+  text-align: center;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.calendar-body__slider__btn {
+  vertical-align: middle;
+  height: 35px;
+  font-size: 13px;
+  line-height: 100%;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.calendar-body__slider__btn_left {
+  width: 35px;
+  padding: 10px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 8px;
+}
+
+.calendar-body__slider__btn_left img {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.calendar-body__slider__btn_right {
+  width: 35px;
+  padding: 10px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 8px;
+}
