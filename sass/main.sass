@@ -2,7 +2,10 @@
 	cursor: pointer
 
 #calendar2 tbody td:nth-child(n+6), #calendar2 .holiday
-
+.count_events
+	font-size: 14px
+	background-color: transparent
+	border: 1px solid #ccc
 #calendar2
 	width: 100%
 	font: monospace
@@ -41,7 +44,9 @@
 	background-color: #3880e2
 	color: #fff
 	&-o
-
+.event_select
+	&:hover
+		cursor: pointer
 .overlay
 	position: fixed
 	display: none
@@ -68,6 +73,8 @@
 			top: 3px
 			width: 10px
 			height: 10px
+			&:hover
+				cursor: pointer
 			img
 				width: 100%
 		input

@@ -53,12 +53,56 @@
 	<div class="overlay">	</div>
 	
 	<script>
+		var monthForSelectEvent;
+		function SelectEvent(element) {
+			var _this = document.querySelector('.active-cell');
+			document.querySelector('.overlay-popup').innerHTML = '<div class="overlay-popup_close"><img class="overlay-popup_close_img_1" src="img/cancel.svg" alt=""></div> <form action=""><input type="text" class="day_title"> <input type="text" class="day_date" readonly="true"><label for="participants">Участники</label><input type="text" class="day_participants" id="participants"><textarea class="day_descr" name="" id="" cols="30" rows="10"></textarea><button class="btn_post">Готово</button><button class="btn_cancel">Удалить</button></form>';
+			var selectEvent = element.textContent;
+			events.forEach(function(_item,q,events) {
+				var numDay = _item.indexOf(".");
+				var strDay = _item.substring(0,numDay);
+
+				var numMonth = _item.indexOf(".",numDay+1);
+				var strMonth = _item.substring(numDay+1,numMonth);
+				
+				var numTitle = _item.indexOf(".",numMonth+1);
+				var strTitle = _item.substring(numMonth+1,numTitle);
+				
+				var numPartic = _item.indexOf(".",numTitle+1);
+				var strPartic = _item.substring(numTitle+1,numPartic);
+
+				var numDescr = _item.indexOf(".",numPartic+1);
+				var strDescr = _item.substring(numPartic+1);
+
+				var participantsDay = strPartic.split(', ')
+
+				var indProb = _this.dataset.day_date.indexOf(" ");
+				if (selectEvent == strTitle & strDay == _this.dataset.day_date.substring(0,indProb) & strMonth == (monthForSelectEvent.getMonth()+1)){
+					document.querySelector('.day_title').value = strTitle;
+					document.querySelector('.day_date').value = _this.dataset.day_date;
+					document.querySelector('.day_participants').value = strPartic;
+					document.querySelector('.day_descr').value = strDescr;		
+				}
+			});
+			
+			document.querySelector('.overlay-popup_close_img_1').onclick = function() {
+				document.querySelector('.overlay').style.display='none';
+				var element = document.querySelector('.overlay-popup');
+				element.parentNode.removeChild(element);
+			  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month));
+			}
+		}
 	var tds;
 	var events = [
 		"3.7.Митинг на Болотной.Володя, Дима Пу.Борьба за свободу",
 		"8.7.Забрать джинсы.-.Забрать джинсы из химчистки",
 		"8.8.Покушать.-.Съесть торт",
-		"10.7.Прыжок.Егор Нагибин.Прыжок с парашютом",
+		"8.7.Прыжок А.Егор Нагибин.Прыжок с парашютом 800м",
+		"8.7.Прыжок Б.Егор Нагибин.Прыжок с парашютом 900м",
+		"8.7.Прыжок В.Егор Нагибин.Прыжок с парашютом 1000м",
+		"14.7.Стадия 0.Амёба.-",
+		"21.7.Стадия 1.Амёба.-"
+
 	];
 	function Calendar2(id, year, month) {
 		var numDayOfWeek = 0,
@@ -129,38 +173,83 @@
 				if (!this.classList.contains('today'))
 					this.style.background = "#c1e4ff";
 				this.classList.add('active-cell');
-				this.parentNode.parentNode.parentNode.parentNode.innerHTML += '<div class="overlay-popup"><div class="overlay-popup_close"><img class="overlay-popup_close_img" src="img/cancel.svg" alt=""></div> <form action=""><input type="text" class="day_title"> <input type="text" class="day_date" readonly="true"><label for="participants">Участники</label><input type="text" class="day_participants" id="participants"><textarea class="day_descr" name="" id="" cols="30" rows="10"></textarea><button class="btn_post">Готово</button><button class="btn_cancel">Удалить</button></form></div>';
-				if (this.dataset.day_title != null)
-				document.querySelector('.day_title').value = this.dataset.day_title;
-				if (this.dataset.day_date != null)
-				document.querySelector('.day_date').value = this.dataset.day_date;
-				if (this.dataset.day_participants != null)
-				document.querySelector('.day_participants').value = this.dataset.day_participants;
-				if (this.dataset.day_descr != null)
-				document.querySelector('.day_descr').value = this.dataset.day_descr;
+				if (this.dataset.day_events == null) {
+					this.parentNode.parentNode.parentNode.parentNode.innerHTML += '<div class="overlay-popup"><div class="overlay-popup_close"><img class="overlay-popup_close_img" src="img/cancel.svg" alt=""></div> <form action=""><input type="text" class="day_title"> <input type="text" class="day_date" readonly="true"><label for="participants">Участники</label><input type="text" class="day_participants" id="participants"><textarea class="day_descr" name="" id="" cols="30" rows="10"></textarea><button class="btn_post">Готово</button><button class="btn_cancel">Удалить</button></form></div>';
+					if (this.dataset.day_title != null)
+					document.querySelector('.day_title').value = this.dataset.day_title;
+					if (this.dataset.day_date != null)
+					document.querySelector('.day_date').value = this.dataset.day_date;
+					if (this.dataset.day_participants != null)
+					document.querySelector('.day_participants').value = this.dataset.day_participants;
+					if (this.dataset.day_descr != null)
+					document.querySelector('.day_descr').value = this.dataset.day_descr;
 
-				if (this.dataset.day_descr == null) document.querySelector('.day_descr').style.border = "1px solid #ccc";
-				if (this.dataset.day_participants == null) document.querySelector('.day_participants').style.border = "1px solid #ccc";
-				if (this.dataset.day_title == null) document.querySelector('.day_title').style.border = "1px solid #ccc";
-				document.querySelector('.btn_cancel').onclick = function() {
+					if (this.dataset.day_descr == null) document.querySelector('.day_descr').style.border = "1px solid #ccc";
+					if (this.dataset.day_participants == null) document.querySelector('.day_participants').style.border = "1px solid #ccc";
+					if (this.dataset.day_title == null) document.querySelector('.day_title').style.border = "1px solid #ccc";
+					document.querySelector('.btn_cancel').onclick = function() {
+
+					}
+					document.querySelector('.overlay-popup_close_img').onclick = function() {
+						document.querySelector('.overlay').style.display='none';
+						var element = document.querySelector('.overlay-popup');
+						element.parentNode.removeChild(element);
+					  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month));
+					}
+					document.querySelector('.day_title').onclick = function() {
+					    document.querySelector('.day_title').style.border = "1px solid #ccc";
+					  };
+					document.querySelector('.day_descr').onclick = function() {
+					    document.querySelector('.day_descr').style.border = "1px solid #ccc";
+					  };
+					document.querySelector('.day_participants').onclick = function() {
+					    document.querySelector('.day_participants').style.border = "1px solid #ccc";
+					  };
+				} else {
+					var eventsList = '';
+					var _this = this;
+					events.forEach(function(item,j,events) {
+						var numDay = item.indexOf(".");
+						var strDay = item.substring(0,numDay);
+
+						var numMonth = item.indexOf(".",numDay+1);
+						var strMonth = item.substring(numDay+1,numMonth);
+						
+						var numTitle = item.indexOf(".",numMonth+1);
+						var strTitle = item.substring(numMonth+1,numTitle);
+						
+						var numPartic = item.indexOf(".",numTitle+1);
+						var strPartic = item.substring(numTitle+1,numPartic);
+
+						var numDescr = item.indexOf(".",numPartic+1);
+						var strDescr = item.substring(numPartic+1);
+
+						var participantsDay = strPartic.split(', ')
+
+						var indProb = _this.dataset.day_date.indexOf(" ");
+						if (strDay == _this.dataset.day_date.substring(0,indProb) & strMonth == (D.getMonth()+1)){
+							monthForSelectEvent = D;
+							eventsList += '<div class="event_select" onclick="SelectEvent(this)">'+strTitle+'</div>';
+						}
+
+					});
+
+					this.parentNode.parentNode.parentNode.parentNode.innerHTML += '<div class="overlay-popup"><div class="overlay-popup_close"><img class="overlay-popup_close_img" src="img/cancel.svg" alt=""></div> '+ eventsList +'</div>';
+					document.querySelector('.overlay-popup_close_img').onclick = function() {
+						document.querySelector('.overlay').style.display='none';
+						var element = document.querySelector('.overlay-popup');
+						element.parentNode.removeChild(element);
+					  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month));
+					}
+					var atable = document.getElementById('calendar2'),
+					    table = atable.getElementsByTagName('td');
+					
+
 
 				}
+				
 
-				document.querySelector('.overlay-popup_close_img').onclick = function() {
-					document.querySelector('.overlay').style.display='none';
-					var element = document.querySelector('.overlay-popup');
-					element.parentNode.removeChild(element);
-				  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month));
-				}
-				document.querySelector('.day_title').onclick = function() {
-				    document.querySelector('.day_title').style.border = "1px solid #ccc";
-				  };
-				document.querySelector('.day_descr').onclick = function() {
-				    document.querySelector('.day_descr').style.border = "1px solid #ccc";
-				  };
-				document.querySelector('.day_participants').onclick = function() {
-				    document.querySelector('.day_participants').style.border = "1px solid #ccc";
-				  };
+				
 
 				var popup = document.querySelector('.overlay-popup');
 				document.querySelector('.overlay').style.display='block';
@@ -200,10 +289,23 @@
 				if (table[i].dataset.day_date != null){
 					var indProb = table[i].dataset.day_date.indexOf(" ");
 					if (strDay == table[i].dataset.day_date.substring(0,indProb) && strMonth == (D.getMonth()+1)){
-						table[i].dataset.day_title = strTitle;
-						table[i].dataset.day_participants = participantsDay; 
-						table[i].dataset.day_descr = strDescr; 
-						table[i].innerHTML += '<div class="day_title_sm">'+table[i].dataset.day_title+'</div>'+'<div class="day_participants_sm">'+table[i].dataset.day_participants+'</div>';
+						if (table[i].dataset.day_title != null) {
+							if (table[i].dataset.day_events != null)
+								table[i].dataset.day_events = (Number(table[i].dataset.day_events)+1);
+							else 
+								table[i].dataset.day_events = 2;
+							table[i].dataset.day_title = '';
+							table[i].dataset.day_participants = ''; 
+							table[i].dataset.day_descr = '';
+							table[i].innerHTML = table[i].dataset.day_date.substring(0,indProb);
+							table[i].innerHTML += '<button class="count_events">'+table[i].dataset.day_events+' мероприятия</button>';
+						}
+						else {
+							table[i].dataset.day_title = strTitle;
+							table[i].dataset.day_participants = participantsDay; 
+							table[i].dataset.day_descr = strDescr; 
+							table[i].innerHTML += '<div class="day_title_sm">'+table[i].dataset.day_title+'</div>'+'<div class="day_participants_sm">'+table[i].dataset.day_participants+'</div>';
+						}
 					}
 				}
 			});

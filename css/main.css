@@ -3,6 +3,12 @@
   cursor: pointer;
 }
 
+.count_events {
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+}
+
 #calendar2 {
   width: 100%;
   font: monospace;
@@ -51,6 +57,10 @@
   color: #fff;
 }
 
+.event_select:hover {
+  cursor: pointer;
+}
+
 .overlay {
   position: fixed;
   display: none;
@@ -84,6 +94,10 @@
   top: 3px;
   width: 10px;
   height: 10px;
+}
+
+.overlay-popup_close:hover {
+  cursor: pointer;
 }
 
 .overlay-popup_close img {
