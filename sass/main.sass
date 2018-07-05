@@ -4,8 +4,10 @@
 #calendar2 tbody td:nth-child(n+6), #calendar2 .holiday
 .count_events
 	font-size: 14px
-	background-color: transparent
+	background-color: #3880e2
 	border: 1px solid #ccc
+	display: block
+	color: #fff
 #calendar2
 	width: 100%
 	font: monospace
@@ -47,6 +49,21 @@
 .event_select
 	&:hover
 		cursor: pointer
+.search-block
+	display: none
+	position: absolute
+	width: 320px
+	height: 50vh
+	right: 10%
+	background-color: #fff
+	z-index: 3	
+	box-shadow: 0 0 11px black
+	overflow: auto
+	&_found
+		border-bottom: 1px solid #ccc
+		padding: 10px
+		&-title
+			font-weight: 700
 .overlay
 	position: fixed
 	display: none
@@ -94,11 +111,12 @@
 			border-radius: 5px
 			margin-right: 10px
 		textarea
-			float: left
+			display: block
 			margin-top: 10px
 			margin-bottom: 10px
 .day
 	&_title
+		width: 100%
 		border: solid 1px transparent
 		font-size: 20px
 		font-weight: 700
@@ -106,9 +124,11 @@
 			font-size: 15px
 			font-weight: 600
 	&_date
+		width: 100%
 		border: solid 1px transparent
 		margin-left: 0
 	&_descr
+		width: 100%
 		border: solid 1px transparent
 	&_participants 
 		border: solid 1px transparent
@@ -124,8 +144,23 @@
 			margin-left: 0
 			margin-right: auto
 		&__input
+			margin-top: 5px
 			margin-left: auto
 			margin-right: 0
+			&-block
+				display: block
+				position: relative
+				&:before
+					position: absolute
+					content: ''
+					display: block
+					z-index: 2
+					width: 20px
+					height: 20px
+					background: transparent url('../img/search.svg') center no-repeat
+					background-size: cover
+					left: -30px
+					top: 10px
 	&-body
 		padding-top: 20px
 		&__slider
@@ -161,3 +196,30 @@
 					line-height: 8px
 	&-body
 		padding-bottom: 210px
+@media (max-width: 769px)
+	.day
+		&_title
+			&_sm
+				display: none
+		&_participants 
+			&_sm
+				display: none
+		&_btn
+			display: none
+	#calendar2
+		tbody
+			td
+				height: 50px
+	.overlay
+		&-popup
+			position: fixed
+			transform: translateX(160px)
+			max-width: 320px
+			left: 0 !important
+			top: 0 !important
+			width: 100% !important
+	.calendar
+		&-header
+			&__btns
+			&__input
+				width: 100%

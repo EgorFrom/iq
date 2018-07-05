@@ -5,8 +5,10 @@
 
 .count_events {
   font-size: 14px;
-  background-color: transparent;
+  background-color: #3880e2;
   border: 1px solid #ccc;
+  display: block;
+  color: #fff;
 }
 
 #calendar2 {
@@ -59,6 +61,28 @@
 
 .event_select:hover {
   cursor: pointer;
+}
+
+.search-block {
+  display: none;
+  position: absolute;
+  width: 320px;
+  height: 50vh;
+  right: 10%;
+  background-color: #fff;
+  z-index: 3;
+  -webkit-box-shadow: 0 0 11px black;
+  box-shadow: 0 0 11px black;
+  overflow: auto;
+}
+
+.search-block_found {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+
+.search-block_found-title {
+  font-weight: 700;
 }
 
 .overlay {
@@ -127,12 +151,13 @@
 }
 
 .overlay-popup textarea {
-  float: left;
+  display: block;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .day_title {
+  width: 100%;
   border: solid 1px transparent;
   font-size: 20px;
   font-weight: 700;
@@ -144,11 +169,13 @@
 }
 
 .day_date {
+  width: 100%;
   border: solid 1px transparent;
   margin-left: 0;
 }
 
 .day_descr {
+  width: 100%;
   border: solid 1px transparent;
 }
 
@@ -173,8 +200,27 @@
 }
 
 .calendar-header__input {
+  margin-top: 5px;
   margin-left: auto;
   margin-right: 0;
+}
+
+.calendar-header__input-block {
+  display: block;
+  position: relative;
+}
+
+.calendar-header__input-block:before {
+  position: absolute;
+  content: '';
+  display: block;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  background: transparent url("../img/search.svg") center no-repeat;
+  background-size: cover;
+  left: -30px;
+  top: 10px;
 }
 
 .calendar-body {
@@ -227,4 +273,36 @@
 
 .calendar-body {
   padding-bottom: 210px;
+}
+
+@media (max-width: 769px) {
+  .day_title_sm {
+    display: none;
+  }
+
+  .day_participants_sm {
+    display: none;
+  }
+
+  .day_btn {
+    display: none;
+  }
+
+  #calendar2 tbody td {
+    height: 50px;
+  }
+
+  .overlay-popup {
+    position: fixed;
+    -webkit-transform: translateX(160px);
+    transform: translateX(160px);
+    max-width: 320px;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+  }
+
+  .calendar-header__input {
+    width: 100%;
+  }
 }
