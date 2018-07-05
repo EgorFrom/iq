@@ -13,7 +13,7 @@
 				<div class="row">
 					<div class="calendar-header__btns">
 						<button class="calendar-header__btn btn">Добавить</button>
-						<button class="calendar-header__btn btn">Обновить</button>
+						<button class="calendar-header__btn btn calendar-header__btn_refresh">Обновить</button>
 					</div>
 					<!-- /.calendar-header_btns -->
 					<input type="text" class="calendar-header__input">
@@ -50,20 +50,29 @@
 		<!-- /.calendar-body -->
 	</div>
 	<!-- /.calendar -->
-	<div class="over">	</div>
+	<div class="overlay">	</div>
+	
 	<script>
 	var tds;
+	var events = [
+		"3.7.Митинг на Болотной.Володя, Дима Пу.Борьба за свободу",
+		"8.7.Забрать джинсы.-.Забрать джинсы из химчистки",
+		"8.8.Покушать.-.Съесть торт",
+		"10.7.Прыжок.Егор Нагибин.Прыжок с парашютом",
+	];
 	function Calendar2(id, year, month) {
 		var numDayOfWeek = 0,
 				Dlast = new Date(year,month+1,0).getDate(),
 				PrevDlast = new Date(year,month,0).getDate(),
 		    D = new Date(year,month,Dlast),
+		    DNext = new Date(year,month+1,Dlast),
 		    DNlast = new Date(D.getFullYear(),D.getMonth(),Dlast).getDay(),
 		    DNfirst = new Date(D.getFullYear(),D.getMonth(),1).getDay(),
 		    calendar = '<tr class="top_line">',
 		    month=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+		    monthParentForm=["Января","Февраля","Марта","Апреля","Мая","Июня","Июля","Августа","Сентября","Октября","Ноября","Декабря"],
 		    dayOfWeek=["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
-		//	alert('Dlast = '+ Dlast+' PrevDlast = '+PrevDlast+' D = '+D+' DNlast = '+DNlast+' DNfirst = '+DNfirst);
+		//alert('Dlast = '+ Dlast+' PrevDlast = '+PrevDlast+' D = '+D+' DNlast = '+DNlast+' DNfirst = '+DNfirst);
 		if (DNfirst != 0) {
 		  for(var  i = 1; i < DNfirst; i++) 
 		  	{
@@ -85,16 +94,16 @@
 		    }
 		    else 
 				{
-					calendar += '<td class="today">' + i;
+					calendar += '<td data-day_date="'+i+ ' ' + monthParentForm[D.getMonth()]+'" class="today">' + i;
 		  	}
 		  }else{
 		    if (numDayOfWeek < 7){
-					calendar += '<td>' + dayOfWeek[numDayOfWeek] + ', ' + i;
+					calendar += '<td data-day_date="'+i+ ' ' + monthParentForm[D.getMonth()]+'">' + dayOfWeek[numDayOfWeek] + ', ' + i;
 					numDayOfWeek++;
 		    }
 		    else 
 				{
-					calendar += '<td>' + i;
+					calendar += '<td data-day_date="'+i+ ' ' + monthParentForm[D.getMonth()]+'">' + i;
 		  	}
 		  }
 		  if (new Date(D.getFullYear(),D.getMonth(),i).getDay() == 0) {
@@ -111,8 +120,102 @@
 		}
 		tds = document.getElementsByTagName('td');
 		for (i=0; i<tds.length; i++) {
-			tds[i].onclick = tdClick;
+			tds[i].onclick = function (e) {
+				if (this.dataset.day_date == null) return false;
+				for (i=0; i<tds.length; i++) {
+					if (!tds[i].classList.contains('today'))
+						tds[i].style.background = "#fff";		
+				}
+				if (!this.classList.contains('today'))
+					this.style.background = "#c1e4ff";
+				this.classList.add('active-cell');
+				this.parentNode.parentNode.parentNode.parentNode.innerHTML += '<div class="overlay-popup"><div class="overlay-popup_close"><img class="overlay-popup_close_img" src="img/cancel.svg" alt=""></div> <form action=""><input type="text" class="day_title"> <input type="text" class="day_date" readonly="true"><label for="participants">Участники</label><input type="text" class="day_participants" id="participants"><textarea class="day_descr" name="" id="" cols="30" rows="10"></textarea><button class="btn_post">Готово</button><button class="btn_cancel">Удалить</button></form></div>';
+				if (this.dataset.day_title != null)
+				document.querySelector('.day_title').value = this.dataset.day_title;
+				if (this.dataset.day_date != null)
+				document.querySelector('.day_date').value = this.dataset.day_date;
+				if (this.dataset.day_participants != null)
+				document.querySelector('.day_participants').value = this.dataset.day_participants;
+				if (this.dataset.day_descr != null)
+				document.querySelector('.day_descr').value = this.dataset.day_descr;
+
+				if (this.dataset.day_descr == null) document.querySelector('.day_descr').style.border = "1px solid #ccc";
+				if (this.dataset.day_participants == null) document.querySelector('.day_participants').style.border = "1px solid #ccc";
+				if (this.dataset.day_title == null) document.querySelector('.day_title').style.border = "1px solid #ccc";
+				document.querySelector('.btn_cancel').onclick = function() {
+
+				}
+
+				document.querySelector('.overlay-popup_close_img').onclick = function() {
+					document.querySelector('.overlay').style.display='none';
+					var element = document.querySelector('.overlay-popup');
+					element.parentNode.removeChild(element);
+				  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month));
+				}
+				document.querySelector('.day_title').onclick = function() {
+				    document.querySelector('.day_title').style.border = "1px solid #ccc";
+				  };
+				document.querySelector('.day_descr').onclick = function() {
+				    document.querySelector('.day_descr').style.border = "1px solid #ccc";
+				  };
+				document.querySelector('.day_participants').onclick = function() {
+				    document.querySelector('.day_participants').style.border = "1px solid #ccc";
+				  };
+
+				var popup = document.querySelector('.overlay-popup');
+				document.querySelector('.overlay').style.display='block';
+					popup.style.display = 'block';
+					e.preventDefault();
+					var elem = document.querySelector('.active-cell');
+					if (elem.offsetWidth + popup.offsetWidth + elem.offsetLeft < window.innerWidth)
+						popup.style.left = (elem.offsetWidth+elem.offsetLeft+15)+'px';
+					else 
+					{	
+						popup.style.left = (elem.offsetLeft - popup.offsetWidth-15)+'px';
+					}
+					popup.style.top = (elem.offsetTop)+'px';
+
+			};
 		}
+		var atable = document.getElementById('calendar2'),
+		    table = atable.getElementsByTagName('td');
+		for (var i = DNlast; i <= table.length-DNlast; i++) 
+			events.forEach(function(item,j,events) {
+				var numDay = item.indexOf(".");
+				var strDay = item.substring(0,numDay);
+
+				var numMonth = item.indexOf(".",numDay+1);
+				var strMonth = item.substring(numDay+1,numMonth);
+				
+				var numTitle = item.indexOf(".",numMonth+1);
+				var strTitle = item.substring(numMonth+1,numTitle);
+				
+				var numPartic = item.indexOf(".",numTitle+1);
+				var strPartic = item.substring(numTitle+1,numPartic);
+
+				var numDescr = item.indexOf(".",numPartic+1);
+				var strDescr = item.substring(numPartic+1);
+
+				var participantsDay = strPartic.split(', ')
+				if (table[i].dataset.day_date != null){
+					var indProb = table[i].dataset.day_date.indexOf(" ");
+					if (strDay == table[i].dataset.day_date.substring(0,indProb) && strMonth == (D.getMonth()+1)){
+						table[i].dataset.day_title = strTitle;
+						table[i].dataset.day_participants = participantsDay; 
+						table[i].dataset.day_descr = strDescr; 
+						table[i].innerHTML += '<div class="day_title_sm">'+table[i].dataset.day_title+'</div>'+'<div class="day_participants_sm">'+table[i].dataset.day_participants+'</div>';
+					}
+				}
+			});
+	}
+	document.querySelector('.calendar-header__btn_refresh').onclick = function() {
+	  Calendar2("calendar2", new Date().getFullYear(), new Date().getMonth());
+	}
+	document.querySelector('.overlay').onclick = function() {
+		document.querySelector('.overlay').style.display='none';
+		var element = document.querySelector('.overlay-popup');
+		element.parentNode.removeChild(element);
+	  Calendar2("calendar2", document.querySelector('#currentDate').dataset.year, parseFloat(document.querySelector('#currentDate').dataset.month));
 	}
 	Calendar2("calendar2", new Date().getFullYear(), new Date().getMonth());
 	// переключатель минус месяц
@@ -128,17 +231,7 @@
 	}
 	
 //	 document.querySelector('.over').innerHTML = '<div class="overlay-popup"> <input type="text"> <input type="text"><input type="text"><input type="text"> <button>Готово</button><button>Удалить</button> </div>';
-		 
-	
-	function tdClick() {
-		for (i=0; i<tds.length; i++) {
-			if (!tds[i].classList.contains('today'))
-				tds[i].style.background = "#fff";		
-		}
-		if (!this.classList.contains('today'))
-			this.style.background = "#c1e4ff";
 
-	}
 	</script>
 
 </body>

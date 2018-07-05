@@ -34,7 +34,6 @@
 				td
 					&:nth-child(2)
 						color: rgb(50, 50, 50)
-
 *
 	font-family: sans-serif
 	outline: none
@@ -42,28 +41,73 @@
 	background-color: #3880e2
 	color: #fff
 	&-o
-		
+
 .overlay
 	position: fixed
+	display: none
 	height: 100%
 	width: 100%	
 	top: 0
+	z-index: 2
 	&-c
 		height: 100%
 		width: 100%	
 	&-popup
+		z-index: 3
 		top: 0
+		left: 100%
 		position: absolute
 		background-color: #fff
 		box-shadow: 0 0 11px black
 		width: 320px
-		padding: 20px	
+		padding: 20px
+		z-index: 4	
+		&_close
+			position: absolute
+			right: 10px
+			top: 3px
+			width: 10px
+			height: 10px
+			img
+				width: 100%
 		input
 			display: block
-			margin-left: auto	
-			margin-right: auto	
-			margin-bottom: 10px		
-
+			margin-bottom: 10px
+		label
+			display: block
+			margin-left: 0
+			text-align: left
+			font-size: 14px
+			opacity: 0.7	
+		button
+			float: left
+			font-size: 14px
+			border: 1px solid #ccc
+			background-color: transparent
+			border-radius: 5px
+			margin-right: 10px
+		textarea
+			float: left
+			margin-top: 10px
+			margin-bottom: 10px
+.day
+	&_title
+		border: solid 1px transparent
+		font-size: 20px
+		font-weight: 700
+		&_sm
+			font-size: 15px
+			font-weight: 600
+	&_date
+		border: solid 1px transparent
+		margin-left: 0
+	&_descr
+		border: solid 1px transparent
+	&_participants 
+		border: solid 1px transparent
+		width: 100%
+		&_sm
+			font-size: 12px
 .calendar
 	&-header
 		background-color: #f1f1f1
@@ -108,3 +152,5 @@
 					padding-top: 0
 					padding-bottom: 0
 					line-height: 8px
+	&-body
+		padding-bottom: 210px

@@ -53,9 +53,11 @@
 
 .overlay {
   position: fixed;
+  display: none;
   height: 100%;
   width: 100%;
   top: 0;
+  z-index: 2;
 }
 
 .overlay-c {
@@ -64,20 +66,85 @@
 }
 
 .overlay-popup {
+  z-index: 3;
   top: 0;
+  left: 100%;
   position: absolute;
   background-color: #fff;
   -webkit-box-shadow: 0 0 11px black;
   box-shadow: 0 0 11px black;
   width: 320px;
   padding: 20px;
+  z-index: 4;
+}
+
+.overlay-popup_close {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+}
+
+.overlay-popup_close img {
+  width: 100%;
 }
 
 .overlay-popup input {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 10px;
+}
+
+.overlay-popup label {
+  display: block;
+  margin-left: 0;
+  text-align: left;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.overlay-popup button {
+  float: left;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.overlay-popup textarea {
+  float: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.day_title {
+  border: solid 1px transparent;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.day_title_sm {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.day_date {
+  border: solid 1px transparent;
+  margin-left: 0;
+}
+
+.day_descr {
+  border: solid 1px transparent;
+}
+
+.day_participants {
+  border: solid 1px transparent;
+  width: 100%;
+}
+
+.day_participants_sm {
+  font-size: 12px;
 }
 
 .calendar-header {
@@ -142,4 +209,8 @@
   padding-top: 0;
   padding-bottom: 0;
   line-height: 8px;
+}
+
+.calendar-body {
+  padding-bottom: 210px;
 }
