@@ -6,7 +6,8 @@
 .count_events {
   font-size: 14px;
   background-color: #3880e2;
-  border: 1px solid #ccc;
+  border: 1px solid #3880e2;
+  width: 100%;
   display: block;
   color: #fff;
 }
@@ -64,11 +65,15 @@
 }
 
 .search-block {
+  -webkit-animation-name: search-e;
+  animation-name: search-e;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
   display: none;
   position: absolute;
   width: 320px;
   height: 50vh;
-  right: 10%;
+  right: 5%;
   background-color: #fff;
   z-index: 3;
   -webkit-box-shadow: 0 0 11px black;
@@ -100,6 +105,10 @@
 }
 
 .overlay-popup {
+  -webkit-animation-name: popup-e;
+  animation-name: popup-e;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
   z-index: 3;
   top: 0;
   left: 100%;
@@ -304,5 +313,53 @@
 
   .calendar-header__input {
     width: 100%;
+  }
+}
+
+@keyframes popup-e {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes popup-e {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes search-e {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+  }
+}
+
+@-webkit-keyframes search-e {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
   }
 }
