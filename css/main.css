@@ -285,6 +285,10 @@
 }
 
 @media (max-width: 769px) {
+  .search-block {
+    right: 0;
+  }
+
   .day_title_sm {
     display: none;
   }
