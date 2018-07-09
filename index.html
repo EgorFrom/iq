@@ -155,11 +155,12 @@
 		});			
   };
 	search.onblur = function() {
+		setTimeout("document.querySelector('.search-block').style.display = 'none';", 300);
 		document.querySelector('.search-block').onclick = function() {
 		}
 	};
+
 	search.onfocus = function() {
-		document.querySelector('.overlay').style.display = 'block';
 		document.querySelector('.search-block').style.display = 'block';
 		document.querySelector('.search-block').innerHTML = '';
 		events.forEach(function(item,i,events) {
